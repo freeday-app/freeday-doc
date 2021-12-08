@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfreeday_doc=self.webpackChunkfreeday_doc||[]).push([[224],{5038:function(e){e.exports=JSON.parse('{"permalink":"/freeday-doc/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"previousPage":null,"nextPage":null,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
