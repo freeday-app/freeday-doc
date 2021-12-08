@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfreeday_doc=self.webpackChunkfreeday_doc||[]).push([[312],{8162:function(e){e.exports=JSON.parse('{"allTagsPath":"/freeday-doc/blog/tags","slug":"/freeday-doc/blog/tags/hello","name":"hello","count":2,"permalink":"/freeday-doc/blog/tags/hello"}')}}]);
