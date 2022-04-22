@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfreeday_doc=self.webpackChunkfreeday_doc||[]).push([[316],{2427:function(e){e.exports=JSON.parse('{"specUrl":"/redoc/api.yaml","type":"url","content":"/redoc/api.yaml"}')}}]);

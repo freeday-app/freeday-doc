@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfreeday_doc=self.webpackChunkfreeday_doc||[]).push([[404],{2684:function(e){e.exports={}}}]);
