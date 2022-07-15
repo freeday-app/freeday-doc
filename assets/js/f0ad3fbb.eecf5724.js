@@ -1,1 +1,0 @@
-(self.webpackChunkfreeday_doc=self.webpackChunkfreeday_doc||[]).push([[612],{5101:function(){},2116:function(){},3197:function(){}}]);
