@@ -124,6 +124,9 @@ paths:
         - Users
       summary: Gets the list of users
       description: ''
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
       responses:
         '200':
           content:
@@ -298,6 +301,8 @@ paths:
           in: query
           schema:
             type: boolean
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
       responses:
         '200':
           content:
@@ -369,6 +374,13 @@ paths:
       description: >
         * Calling this method updates the Slack channel list in database by
         synchronizing with Slack API (max. one time per minute)
+      parameters:
+        - name: memberOnly
+          in: query
+          schema:
+            type: boolean
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
       responses:
         '200':
           content:
@@ -457,6 +469,9 @@ paths:
           in: query
           style: form
           explode: false
+          description: >-
+            e.g. `?type=aaa&type=bbb&type=ccc` or
+            `?type[]=aaa&type[]=bbb&type[]=ccc`
           schema:
             type: array
             items:
@@ -466,6 +481,9 @@ paths:
           in: query
           style: form
           explode: false
+          description: >-
+            e.g. `?slackUser=aaa&slackUser=bbb` or
+            `?slackUser[]=aaa&slackUser[]=bbb`
           schema:
             type: array
             items:
@@ -483,10 +501,11 @@ paths:
           in: query
           schema:
             type: string
-            format: slack-id
             enum:
               - asc
               - desc
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
       responses:
         '200':
           content:
@@ -505,6 +524,9 @@ paths:
       summary: Creates a new dayoff
       description: |
         * If conflicts with other daysoff are detected an error is thrown
+        * This endpoint can be used to create a dayoff for one or multiple users
+          * Send a Slack user ID as a string in `slackUserId` to create a dayoff for one user
+          * Send an array of Slack user ID in `slackUserId` to create a dayoff for multiple users
       requestBody:
         required: true
         content:
@@ -734,6 +756,8 @@ paths:
           in: query
           schema:
             type: boolean
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
       responses:
         '200':
           content:
@@ -1394,11 +1418,6 @@ components:
           type: string
           format: uuid
           example: 5edb896d286e1fba4f7047a1
-        slackUser:
-          description: Slack user ID
-          type: string
-          format: slack-id
-          example: UGJ7AVX32
         comment:
           type: string
           description: Comment
@@ -1410,9 +1429,23 @@ components:
     DayoffCreate:
       allOf:
         - $ref: '#/components/schemas/DayoffEdit'
+        - type: object
+          properties:
+            slackUserId:
+              description: Slack user ID or list of Slack user IDs
+              oneOf:
+                - type: string
+                  format: slack-id
+                  example: UGJ7AVX32
+                - type: array
+                  items:
+                    type: string
+                    format: slack-id
+                    example: UGJ7AVX32
         - required:
             - type
-            - slackUser
+            - slackUserId
+            - slackUserIds
             - start
     DayoffConfirmPost:
       type: object
@@ -1606,5 +1639,20 @@ components:
                 example:
                   error: Not found
                   code: 4040
+  parameters:
+    Page:
+      name: page
+      in: query
+      schema:
+        oneOf:
+          - type: number
+          - type: string
+            enum:
+              - all
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: number
 security:
   - BearerToken: []
